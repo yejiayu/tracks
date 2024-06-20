@@ -3,6 +3,8 @@ package junction
 import (
 	"context"
 	"fmt"
+
+	logs "github.com/airchains-network/decentralized-sequencer/log"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/ignite/cli/v28/ignite/pkg/cosmosclient"
 )
@@ -12,6 +14,7 @@ func CheckBalance(jsonRPC string, accountAddress string) (bool, int64, error) {
 	ctx := context.Background()
 	client, err := cosmosclient.New(ctx, cosmosclient.WithNodeAddress(jsonRPC))
 	if err != nil {
+		logs.Log.Error(err.Error())
 		errorMsg := fmt.Errorf("Switchyard client connection failed, make sure jsonRPC is correct and active. JsonRPC: " + jsonRPC)
 		return false, 0, errorMsg
 	}
